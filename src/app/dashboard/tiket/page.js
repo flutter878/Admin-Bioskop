@@ -4,7 +4,7 @@ import styles from "@/app/ui/dashboard/user/user.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const User = () => {
+const Tiket = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -17,10 +17,9 @@ const User = () => {
         <thead>
             <tr>
                <td>Nama</td> 
-               <td>Alamat</td> 
-               <td>Telepon</td> 
-               <td>Jk</td> 
-               <td>Email</td> 
+               <td>Genre</td> 
+               <td>Rating</td> 
+               <td>Durasi</td> 
             </tr>
         </thead>
         <tbody>
@@ -28,17 +27,16 @@ const User = () => {
                 <td><div className={styles.user}>
                 <Image
                 className={styles.userImage}
-                src="/profile.png"
+                src="/joker.jpg"
                 alt=""
                 width={40}
                 height={40}/>                 
-                Mus
+                Joker
                 </div>
             </td>
-            <td>Bantaeng</td>
-            <td>081347197560</td>
-            <td>Pria</td>
-            <td>musli@gmail.com</td>
+            <td>Cerite seru</td>
+            <td>8.5</td>
+            <td>2.2 Jam</td>
             <td>
                 <div className={styles.buttons}>
                 <Link href="/">
@@ -55,4 +53,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Tiket;

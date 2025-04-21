@@ -4,7 +4,7 @@ import styles from "@/app/ui/dashboard/user/user.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const User = () => {
+const Bioskop = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -16,11 +16,9 @@ const User = () => {
       <table className={styles.table}>
         <thead>
             <tr>
-               <td>Nama</td> 
+               <td>Nama Bioskop</td> 
                <td>Alamat</td> 
                <td>Telepon</td> 
-               <td>Jk</td> 
-               <td>Email</td> 
             </tr>
         </thead>
         <tbody>
@@ -28,17 +26,15 @@ const User = () => {
                 <td><div className={styles.user}>
                 <Image
                 className={styles.userImage}
-                src="/profile.png"
+                src="/logobioskop.png"
                 alt=""
                 width={40}
                 height={40}/>                 
-                Mus
+                XXI
                 </div>
             </td>
-            <td>Bantaeng</td>
-            <td>081347197560</td>
-            <td>Pria</td>
-            <td>musli@gmail.com</td>
+            <td>MTos</td>
+            <td>081828373263</td>
             <td>
                 <div className={styles.buttons}>
                 <Link href="/">
@@ -55,4 +51,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Bioskop

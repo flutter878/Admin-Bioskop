@@ -4,7 +4,7 @@ import styles from "@/app/ui/dashboard/user/user.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const User = () => {
+const Admin = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -17,10 +17,8 @@ const User = () => {
         <thead>
             <tr>
                <td>Nama</td> 
-               <td>Alamat</td> 
-               <td>Telepon</td> 
-               <td>Jk</td> 
-               <td>Email</td> 
+               <td>Username</td>
+               <td>Password</td> 
             </tr>
         </thead>
         <tbody>
@@ -32,13 +30,11 @@ const User = () => {
                 alt=""
                 width={40}
                 height={40}/>                 
-                Mus
+                Joker
                 </div>
             </td>
-            <td>Bantaeng</td>
-            <td>081347197560</td>
-            <td>Pria</td>
-            <td>musli@gmail.com</td>
+            <td>admin@gmail.com</td>
+            <td>admin</td>
             <td>
                 <div className={styles.buttons}>
                 <Link href="/">
@@ -55,4 +51,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Admin;
