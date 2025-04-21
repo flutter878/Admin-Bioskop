@@ -7,9 +7,10 @@ import {
   MdOutlineChat,
   MdNotifications,
   MdPublic,
+  MdMenu,
 } from 'react-icons/md';
 
-const Navbar = () => {
+const Navbar = ({toggleSidebar}) => {
   const pathname = usePathname();
 
   return (
@@ -20,6 +21,7 @@ const Navbar = () => {
           <MdSearch />
           <input type="text" placeholder="Search..." className={styles.input} />
         </div>
+  
         <div className={styles.icons}>
           <MdOutlineChat size={20} />
           <MdNotifications size={20} />

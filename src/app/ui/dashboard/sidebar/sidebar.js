@@ -1,6 +1,6 @@
 import styles from './sidebar.module.css';
 import Image from 'next/image';
-
+import MenuLink from '@/app/ui/dashboard/sidebar/menuLink/menuLink'
 import {
   MdDashboard,
   MdTheaters,
@@ -12,6 +12,7 @@ import {
   MdSupervisedUserCircle,
   MdOutlineAdminPanelSettings,
   MdLogout,
+  MdMenu,
 } from 'react-icons/md';
 
 const menuItems = [
@@ -64,8 +65,8 @@ const menuItems = [
     title: 'User',
     list: [
       {
-        title: 'Member',
-        path: '/dashboard/member',
+        title: 'user',
+        path: '/dashboard/user',
         icon: <MdSupervisedUserCircle />,
       },
       {
@@ -77,17 +78,23 @@ const menuItems = [
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({toggleSidebar}) => {
+  console.log(toggleSidebar);
   return (
     <div className={styles.container}>
       <div className={styles.profile}>
-        <img src="profile.png" alt="User Profile" className={styles.avatar} />
+        <Image className={styles.profileImage} src="/profile.png" alt="" width="50" height="50"/>
         <div className={styles.userInfo}>
           <span className={styles.username}>user1</span>
           <span className={styles.role}>Administrator</span>
         </div>
       </div>
-
+      <div className={styles.menu}>
+            <button onClick={toggleSidebar} className={styles.toggleBtn}>
+        <MdMenu size={24} />
+       </button>
+        </div>
+ 
       <div className={styles.menu}>
         {menuItems.map((section) => (
           <div key={section.title}>
@@ -95,8 +102,8 @@ const Sidebar = () => {
             <ul className={styles.menuList}>
               {section.list.map((item) => (
                 <li key={item.title} className={styles.menuItem}>
-                  {item.icon}
-                  <span>{item.title}</span>
+                  {item.icon}              
+                  <MenuLink item={item} key={item.title} />
                 </li>
               ))}
             </ul>

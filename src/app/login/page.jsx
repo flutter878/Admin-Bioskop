@@ -15,7 +15,7 @@ export default function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Dummy auth
-    if (form.email === 'admin@example.com' && form.password === 'admin') {
+    if (form.email === 'admin@gmail.com' && form.password === 'admin') {
       router.push('/dashboard');
     } else {
       alert('Email atau password salah!');
