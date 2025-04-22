@@ -9,7 +9,7 @@ const Film = () => {
     <div className={styles.container}>
       <div className={styles.top}>
         <Search placeholder="Search for a user..." />
-        <Link href="/dashboard/user/add">
+        <Link href="/dashboard/film/tambah">
           <button className={styles.button}>Tambah Baru</button>
         </Link>
       </div>
@@ -17,6 +17,7 @@ const Film = () => {
         <thead>
             <tr>
                <td>Nama</td> 
+               <td>Deskripsi</td> 
                <td>Genre</td> 
                <td>Rating</td> 
                <td>Durasi</td> 
@@ -34,6 +35,7 @@ const Film = () => {
                 Joker
                 </div>
             </td>
+            <td>scsscscscscscscc</td>
             <td>Cerite seru</td>
             <td>8.5</td>
             <td>2.2 Jam</td>
