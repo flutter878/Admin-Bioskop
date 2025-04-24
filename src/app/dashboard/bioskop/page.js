@@ -8,17 +8,17 @@ const Bioskop = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a user..." />
-        <Link href="/dashboard/user/add">
+        <Search placeholder="Search for a bioskop..." />
+        <Link href="/dashboard/bioskop/tambah">
           <button className={styles.button}>Tambah Baru</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
             <tr>
-               <td>Nama Bioskop</td> 
-               <td>Alamat</td> 
-               <td>Telepon</td> 
+              <td>Nama Bioskop</td> 
+              <td>Alamat</td> 
+              <td>Telepon</td> 
             </tr>
         </thead>
         <tbody>

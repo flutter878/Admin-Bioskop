@@ -8,17 +8,17 @@ const Admin = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a user..." />
-        <Link href="/dashboard/user/add">
+        <Search placeholder="Search for a admin..." />
+        <Link href="/dashboard/admin/tambah">
           <button className={styles.button}>Tambah Baru</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
             <tr>
-               <td>Nama</td> 
-               <td>Username</td>
-               <td>Password</td> 
+              <td>Nama</td> 
+              <td>Username</td>
+              <td>Password</td> 
             </tr>
         </thead>
         <tbody>

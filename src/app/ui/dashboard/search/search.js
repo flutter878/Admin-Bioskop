@@ -7,7 +7,7 @@ const SearchBar = ({placeholder}) => {
       <MdSearch className={styles.icon} />
       <input
         type="text"
-        placeholder="Search for a user..."
+        placeholder="Cari..."
         className={styles.input}
       />
     </div>

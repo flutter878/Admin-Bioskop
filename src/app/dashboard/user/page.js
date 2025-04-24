@@ -9,18 +9,18 @@ const User = () => {
     <div className={styles.container}>
       <div className={styles.top}>
         <Search placeholder="Search for a user..." />
-        <Link href="/dashboard/user/add">
+        <Link href="/dashboard/user/tambah">
           <button className={styles.button}>Tambah Baru</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
             <tr>
-               <td>Nama</td> 
-               <td>Alamat</td> 
-               <td>Telepon</td> 
-               <td>Jk</td> 
-               <td>Email</td> 
+              <td>Nama</td> 
+              <td>Alamat</td> 
+              <td>Telepon</td> 
+              <td>Jk</td> 
+              <td>Email</td> 
             </tr>
         </thead>
         <tbody>

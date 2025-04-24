@@ -8,16 +8,16 @@ const Film = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a user..." />
-        <Link href="/dashboard/user/add">
+        <Search placeholder="Search for a genre..." />
+        <Link href="/dashboard/genre/tambah">
           <button className={styles.button}>Tambah Baru</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
             <tr>
-               <td>Nama Film</td> 
-               <td>Genre</td> 
+              <td>Nama Film</td> 
+              <td>Genre</td> 
 
             </tr>
         </thead>

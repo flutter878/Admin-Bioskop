@@ -8,19 +8,19 @@ const Pemesanan = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a user..." />
-        <Link href="/dashboard/user/add">
+        <Search placeholder="Search for a pemesanan..." />
+        <Link href="/dashboard/pemesanan/tambah">
           <button className={styles.button}>Tambah Baru</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
             <tr>
-               <td>Nama Film</td> 
-               <td>Nama Pemesan</td> 
-               <td>Nama Bioskop</td> 
-               <td>Harga</td> 
-               <td>status</td> 
+              <td>Nama Film</td> 
+              <td>Nama Pemesan</td> 
+              <td>Nama Bioskop</td> 
+              <td>Harga</td> 
+              <td>status</td> 
             </tr>
         </thead>
         <tbody>

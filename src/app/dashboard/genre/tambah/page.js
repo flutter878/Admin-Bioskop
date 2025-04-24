@@ -5,8 +5,6 @@ const Tambah = () => {
             <form action="" className={styles.form}>
                 <input type="text" placeholder='nama film' name='nama' required />
                     <input type="text" placeholder='genre' name='price'/>
-                    <input type="text" placeholder='rating' name='stock'/>
-                    <input type="number" placeholder='durasi' name='time'/>
                     <textarea
                     name="desc"
                     id="desc"
