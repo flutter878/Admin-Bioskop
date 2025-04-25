@@ -92,9 +92,8 @@ const Sidebar = ({toggleSidebar}) => {
       <div className={styles.menu}>
             <button onClick={toggleSidebar} className={styles.toggleBtn}>
         <MdMenu size={24} />
-       </button>
+      </button>
         </div>
- 
       <div className={styles.menu}>
         {menuItems.map((section) => (
           <div key={section.title}>

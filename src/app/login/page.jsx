@@ -14,7 +14,6 @@ export default function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Dummy auth
     if (form.email === 'admin@gmail.com' && form.password === 'admin') {
       router.push('/dashboard');
     } else {
@@ -23,49 +22,34 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.left}>
-        <div className={styles.brand}>TheCubeFactory</div>
-        <h2>Welcome back</h2>
-        <p>Please enter your details</p>
-        <form onSubmit={handleSubmit} className={styles.form}>
+    <div className={styles.loginContainer}>
+      <div className={styles.loginLeft}>
+        <h1 className={styles.loginBrand}>Hello..</h1>
+        <h2 className={styles.loginTitle}>Welcome Back</h2>
+        <p className={styles.loginDesc}>Please sign in to continue.</p>
+
+        <form className={styles.loginForm} onSubmit={handleSubmit}>
           <input
             type="email"
             name="email"
-            placeholder="Email address"
             value={form.email}
             onChange={handleChange}
-            required
+            className={styles.loginInput}
+            placeholder="Email"
           />
           <input
             type="password"
             name="password"
-            placeholder="Password"
             value={form.password}
             onChange={handleChange}
-            required
+            className={styles.loginInput}
+            placeholder="Password"
           />
-          <div className={styles.options}>
-            <label>
-              <input type="checkbox" /> Remember for 30 days
-            </label>
-            <a href="#" className={styles.link}>
-              Forgot password
-            </a>
-          </div>
-          <button type="submit" className={styles.button}>
-            Sign in
-          </button>
-          <button type="button" className={styles.google}>
-            <img src="/google-icon.svg" alt="Google" /> Sign in with Google
-          </button>
-          <p className={styles.signup}>
-            Don’t have an account? <a href="#">Sign up</a>
-          </p>
+          <button className={styles.loginButton} type="submit">Login</button>
         </form>
       </div>
-      <div className={styles.right}>
-        <img src="/images/illustration.png" alt="Illustration" />
+      <div className={styles.loginRight}>
+        <img src="/side.jpg" alt="Login illustration" />
       </div>
     </div>
   );
