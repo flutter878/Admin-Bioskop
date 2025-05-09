@@ -18,6 +18,7 @@ const Film = () => {
             <tr>
               <td>Nama Film</td> 
               <td>Genre</td> 
+              <td>Aksi</td> 
 
             </tr>
         </thead>

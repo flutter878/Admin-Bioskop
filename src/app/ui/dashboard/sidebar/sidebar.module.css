@@ -109,3 +109,15 @@
   border: none;
   cursor: pointer;
 }
+.menuItem.active {
+  color: #1e90ff;
+  font-weight: bold;
+  background-color: #111133;
+  pointer-events: none; /* opsional: cegah hover */
+  border-radius: 6px;
+}
+
+.menuItem.active:hover {
+  color: #1e90ff;
+  background-color: #111133;
+}

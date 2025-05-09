@@ -1,7 +1,10 @@
+'use client';
+
 import styles from './sidebar.module.css';
 import Image from 'next/image';
-import MenuLink from '@/app/ui/dashboard/sidebar/menuLink/menuLink'
-import {
+import MenuLink from './menuLink/menuLink';
+import { usePathname, useRouter, handleLogout} from 'next/navigation';
+import { 
   MdDashboard,
   MdTheaters,
   MdMovie,
@@ -78,38 +81,58 @@ const menuItems = [
   },
 ];
 
-const Sidebar = ({toggleSidebar}) => {
-  console.log(toggleSidebar);
+const Sidebar = ({ toggleSidebar }) => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const handleLogout = () => {
+    router.push('/login');
+  }
   return (
     <div className={styles.container}>
       <div className={styles.profile}>
-        <Image className={styles.profileImage} src="/profile.png" alt="" width="50" height="50"/>
+        <Image
+          className={styles.profileImage}
+          src="/profile.png"
+          alt=""
+          width="50"
+          height="50"
+        />
         <div className={styles.userInfo}>
           <span className={styles.username}>user1</span>
           <span className={styles.role}>Administrator</span>
         </div>
       </div>
+
       <div className={styles.menu}>
-            <button onClick={toggleSidebar} className={styles.toggleBtn}>
-        <MdMenu size={24} />
-      </button>
-        </div>
+        <button onClick={toggleSidebar} className={styles.toggleBtn}>
+          <MdMenu size={24} />
+        </button>
+      </div>
+
       <div className={styles.menu}>
         {menuItems.map((section) => (
           <div key={section.title}>
             <h3 className={styles.sectionTitle}>{section.title}</h3>
             <ul className={styles.menuList}>
-              {section.list.map((item) => (
-                <li key={item.title} className={styles.menuItem}>
-                  {item.icon}              
-                  <MenuLink item={item} key={item.title} />
-                </li>
-              ))}
+              {section.list.map((item) => {
+                const isActive = pathname === item.path;
+                return (
+                  <li
+                    key={item.title}
+                    className={`${styles.menuItem} ${
+                      isActive ? styles.active : ''
+                    }`}
+                  >
+                    {item.icon}
+                    <MenuLink item={item} key={item.title} />
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
       </div>
-      <button className={styles.logout}>
+      <button  onClick={handleLogout} className={styles.logout}>
         <MdLogout />
         Logout
       </button>

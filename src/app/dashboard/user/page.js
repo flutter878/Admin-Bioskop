@@ -1,10 +1,14 @@
+import { fetchUser } from "@/app/lib/data";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/user/user.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const User = () => {
+const User = async () => {
+  const user = await fetchUser();
+
+  console.log(user)
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -32,7 +36,7 @@ const User = () => {
                 alt=""
                 width={40}
                 height={40}/>                 
-                Mus
+                cai
                 </div>
             </td>
             <td>Bantaeng</td>
