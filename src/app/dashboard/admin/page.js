@@ -1,54 +1,51 @@
+// pages/dashboard/admin/page.jsx (atau app/dashboard/admin/page.jsx jika kamu menggunakan App Router)
+import { fetchAuthUsers } from '@/lib/data'
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/user/user.module.css";
-import Image from "next/image";
 import Link from "next/link";
 
-const Admin = () => {
+const AdminPage = async () => {
+  const admins = await fetchAuthUsers();
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a admin..." />
+        <Search placeholder="Cari admin..." />
         <Link href="/dashboard/admin/tambah">
-          <button className={styles.button}>Tambah Baru</button>
+          <button className={styles.button}>Tambah Admin</button>
         </Link>
       </div>
+
       <table className={styles.table}>
         <thead>
-            <tr>
-              <td>Nama</td> 
-              <td>Username</td>
-              <td>Password</td> 
-            </tr>
+          <tr>
+            <td>Nama</td>
+            <td>Email</td>
+            <td>Aksi</td>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><div className={styles.user}>
-                <Image
-                className={styles.userImage}
-                src="/profile.png"
-                alt=""
-                width={40}
-                height={40}/>                 
-                Joker
-                </div>
-            </td>
-            <td>admin@gmail.com</td>
-            <td>admin</td>
-            <td>
+          {admins.map((admin) => (
+            <tr key={admin.id}>
+              <td>{admin.nama}</td>
+              <td>{admin.email}</td>
+              <td>
                 <div className={styles.buttons}>
-                <Link href="/">
+                  <Link href={`/dashboard/admin/${admin.id}`}>
                     <button className={`${styles.button} ${styles.lihat}`}>Lihat</button>
-                </Link>
-                    <button className={`${styles.button} ${styles.hapus}`}>Hapus</button>
+                  </Link>
+                  <button className={`${styles.button} ${styles.hapus}`}>Hapus</button>
                 </div>
-            </td>
+              </td>
             </tr>
+          ))}
         </tbody>
       </table>
-      <Pagination/>
+
+      <Pagination />
     </div>
   );
 };
 
-export default Admin;
+export default AdminPage;

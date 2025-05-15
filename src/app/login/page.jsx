@@ -3,6 +3,7 @@
 import styles from './login.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -12,12 +13,17 @@ export default function LoginPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.email === 'admin@gmail.com' && form.password === 'admin') {
-      router.push('/dashboard');
-    } else {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: form.email,
+      password: form.password,
+    });
+
+    if (error) {
       alert('Email atau password salah!');
+    } else {
+      router.push('/dashboard');
     }
   };
 
@@ -54,3 +60,5 @@ export default function LoginPage() {
     </div>
   );
 }
+console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+console.log('Supabase Key:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);

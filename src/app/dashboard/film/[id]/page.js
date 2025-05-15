@@ -1,22 +1,44 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '@/app/ui/dashboard/film/tambahfilm.module.css';
 
-const TambahFilm = () => {
-  const [form, setForm] = useState({
+const EditFilm = ({ filmId }) => {
+const [form, setForm] = useState({
     nama: '',
     deskripsi: '',
     genre: '',
     rating: '',
     durasi: '',
-    poster: null, // file
-  });
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
+    poster: null,
+});
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [previewUrl, setPreviewUrl] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
 
-  const validateForm = () => {
+    useEffect(() => {
+    const fetchFilm = async () => {
+    try {
+        const res = await fetch(`/api/film/${filmId}`);
+        if (res.ok) {
+        const data = await res.json();
+        setForm({
+            nama: data.nama || '',
+            deskripsi: data.deskripsi || '',
+            genre: data.genre || '',
+            rating: data.rating?.toString() || '',
+            durasi: data.durasi?.toString() || '',
+            poster: null,
+            });
+            setPreviewUrl(data.poster || null);
+        }
+        } catch (error) {
+        alert('Gagal mengambil data film');
+        }
+    };
+    fetchFilm();
+    }, [filmId]);
+    const validateForm = () => {
     const newErrors = {};
     
     if (!form.nama.trim()) newErrors.nama = 'Nama film harus diisi';
@@ -24,87 +46,69 @@ const TambahFilm = () => {
     if (!form.genre.trim()) newErrors.genre = 'Genre harus diisi';
     
     if (!form.rating) {
-      newErrors.rating = 'Rating harus diisi';
+        newErrors.rating = 'Rating harus diisi';
     } else if (parseFloat(form.rating) < 1 || parseFloat(form.rating) > 10) {
-      newErrors.rating = 'Rating harus antara 1-10';
+        newErrors.rating = 'Rating harus antara 1-10';
     }
     
     if (!form.durasi) {
-      newErrors.durasi = 'Durasi harus diisi';
+        newErrors.durasi = 'Durasi harus diisi';
     } else if (parseInt(form.durasi) <= 0) {
-      newErrors.durasi = 'Durasi harus lebih dari 0 menit';
+        newErrors.durasi = 'Durasi harus lebih dari 0 menit';
     }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+    };
 
-  const handleChange = (e) => {
+    const handleChange = (e) => {
     const { id, value } = e.target;
     setForm(prev => ({ ...prev, [id]: value }));
-    
-    // Clear error when field is edited
     if (errors[id]) {
-      setErrors(prev => {
+        setErrors(prev => {
         const newErrors = {...prev};
         delete newErrors[id];
         return newErrors;
-      });
+    });
     }
-  };
+};
 
-  const handleFileChange = (e) => {
+    const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setForm(prev => ({ ...prev, poster: file }));
-      
-      // Create preview URL
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
+        setForm(prev => ({ ...prev, poster: file }));
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
         setPreviewUrl(fileReader.result);
-      };
-      fileReader.readAsDataURL(file);
+    };
+        fileReader.readAsDataURL(file);
     } else {
-      setForm(prev => ({ ...prev, poster: null }));
-      setPreviewUrl(null);
+        setForm(prev => ({ ...prev, poster: null }));
+        setPreviewUrl(null);
     }
-  };
+};
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) return;
-    
     setLoading(true);
-    
+
     try {
-      const body = new FormData();
-      body.append('nama', form.nama);
+        const body = new FormData();
+        body.append('nama', form.nama);
       body.append('deskripsi', form.deskripsi);
       body.append('genre', form.genre);
       body.append('rating', form.rating);
       body.append('durasi', form.durasi);
       if (form.poster) body.append('poster', form.poster);
 
-      const res = await fetch('/api/film', {
-        method: 'POST',
+      const res = await fetch(`/api/film/${filmId}`, {
+        method: 'PATCH',
         body,
       });
 
       if (res.ok) {
-        setSuccessMessage('Film berhasil ditambahkan!');
-        // Reset form after successful submission
-        setForm({
-          nama: '',
-          deskripsi: '',
-          genre: '',
-          rating: '',
-          durasi: '',
-          poster: null,
-        });
-        setPreviewUrl(null);
-        
-        // Redirect to film page after 2 seconds
+        setSuccessMessage('Film berhasil diupdate!');
         setTimeout(() => {
           window.location.href = '/dashboard/film';
         }, 2000);
@@ -132,7 +136,7 @@ const TambahFilm = () => {
       )}
       
       <form onSubmit={handleSubmit} className={styles.form}>
-        <h2>Tambah Film</h2>
+        <h2>Edit Film</h2>
 
         <div className={styles.formGroup}>
           <label htmlFor="nama">Nama Film</label>
@@ -207,7 +211,6 @@ const TambahFilm = () => {
             onChange={handleFileChange}
             className={styles.fileInput}
           />
-          
           {previewUrl && (
             <div className={styles.previewContainer}>
               <p className={styles.previewLabel}>Preview:</p>
@@ -228,7 +231,7 @@ const TambahFilm = () => {
             disabled={loading}
             className={styles.submitButton}
           >
-            {loading ? 'Saving...' : 'Save'}
+            {loading ? 'Saving...' : 'Update'}
           </button>
           
           <button
@@ -244,4 +247,4 @@ const TambahFilm = () => {
   );
 };
 
-export default TambahFilm;
+export default EditFilm;
