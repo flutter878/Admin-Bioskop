@@ -36,6 +36,7 @@ const FilmDashboard = () => {
         <table className={styles.table}>
           <thead>
   <tr>
+    <th className={styles.th}>No</th>
     <th className={styles.th}>Poster</th>
     <th className={styles.th}>Nama</th>
     <th className={styles.th}>Deskripsi</th>
@@ -51,8 +52,9 @@ const FilmDashboard = () => {
       <td colSpan="7" className={styles.noData}>Tidak ada data film</td>
     </tr>
   ) : (
-    films.map((f) => (
+    films.map((f, index) => (
       <tr key={f.id}>
+        <td className={styles.td}>{index + 1}</td>
         <td className={styles.td}>
           {f.poster ? (
             <img
@@ -67,12 +69,12 @@ const FilmDashboard = () => {
         </td>
         <td className={styles.td}>{f.nama}</td>
         <td className={styles.td}>{f.deskripsi.split(" ").slice(0, 5).join(" ") + "..."}</td>
-        <td className={styles.td}>{f.genre}</td>
+        <td className={styles.td}>{f.tb_genre?.genre || '-'}</td>
         <td className={styles.td}>{f.rating}</td>
         <td className={styles.td}>{f.durasi}</td>
         <td className={`${styles.td} ${styles.actions}`}>
           <Link href={`/dashboard/film/${f.id}`}>
-            <button className={`${styles.button} ${styles.viewButton}`}>Lihat</button>
+            <button className={`${styles.button} ${styles.viewButton}`}>Edit</button>
           </Link>
           <button
             onClick={() => handleDelete(f.id)}

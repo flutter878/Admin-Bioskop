@@ -3,6 +3,8 @@
 import styles from './sidebar.module.css';
 import Image from 'next/image';
 import MenuLink from './menuLink/menuLink';
+
+
 import { usePathname, useRouter, handleLogout} from 'next/navigation';
 import { 
   MdDashboard,
@@ -80,6 +82,8 @@ const menuItems = [
     ],
   },
 ];
+
+
 
 const Sidebar = ({ toggleSidebar }) => {
   const pathname = usePathname();

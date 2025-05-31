@@ -1,54 +1,81 @@
-import Pagination from "@/app/ui/dashboard/pagination/pagination";
-import Search from "@/app/ui/dashboard/search/search";
-import styles from "@/app/ui/dashboard/user/user.module.css";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import { useEffect, useState } from 'react';
+import { getTiket } from '@/lib/tiket/getTiket';
+import { deleteTiket } from '@/lib/tiket/deleteTiket';
+import Link from 'next/link';
+import styles from '@/app/ui/dashboard/film/film.module.css';
 
 const Tiket = () => {
+  const [tiket, setTiket] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getTiket();
+      setTiket(data);
+    }
+    fetchData();
+  }, []);
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm('Yakin ingin menghapus tiket ini?');
+    if (!confirmDelete) return;
+    await deleteTiket(id);
+    setTiket((prev) => prev.filter((item) => item.id !== id));
+  };
+
   return (
     <div className={styles.container}>
-      <div className={styles.top}>
-        <Search placeholder="Search for a tiket..." />
+      <div className={styles.header}>
+        <h2 className={styles.title}>Daftar Tiket</h2>
         <Link href="/dashboard/tiket/tambah">
-          <button className={styles.button}>Tambah Baru</button>
+          <button className={`${styles.button} ${styles.addButton}`}>Tambah Tiket</button>
         </Link>
       </div>
-      <table className={styles.table}>
-        <thead>
+
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
+          <thead>
             <tr>
-              <td>Nama</td> 
-              <td>Genre</td> 
-              <td>Rating</td> 
-              <td>Durasi</td> 
+              <th className={styles.th}>No</th>
+              <th className={styles.th}>Nama Film</th>
+              <th className={styles.th}>Nama Bioskop</th>
+              <th className={styles.th}>Harga</th>
+              <th className={styles.th}>jadwal</th>
+              <th className={styles.th}>Keterangan</th>
+              <th className={styles.th}>Aksi</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><div className={styles.user}>
-                <Image
-                className={styles.userImage}
-                src="/joker.jpg"
-                alt=""
-                width={40}
-                height={40}/>                 
-                Joker
-                </div>
-            </td>
-            <td>Cerite seru</td>
-            <td>8.5</td>
-            <td>2.2 Jam</td>
-            <td>
-                <div className={styles.buttons}>
-                <Link href="/">
-                    <button className={`${styles.button} ${styles.lihat}`}>Lihat</button>
-                </Link>
-                    <button className={`${styles.button} ${styles.hapus}`}>Hapus</button>
-                </div>
-            </td>
-            </tr>
-        </tbody>
-      </table>
-      <Pagination/>
+          </thead>
+          <tbody>
+            {tiket.length === 0 ? (
+              <tr>
+                <td colSpan="6" className={styles.noData}>Tidak ada data tiket</td>
+              </tr>
+            ) : (
+              tiket.map((t, index) => (
+                <tr key={t.id}>
+                  <td className={styles.td}>{index + 1}</td>
+                  <td className={styles.td}>{t.tb_film?.nama || '-'}</td>
+                  <td className={styles.td}>{t.tb_bioskop?.nama_bioskop || '-'}</td>
+                  <td className={styles.td}>Rp {t.harga?.toLocaleString()}</td>
+                  <td className={styles.td}>{t.jadwal}</td>
+                  <td className={styles.td}>{t.ket || '-'}</td>
+                  <td className={`${styles.td} ${styles.actions}`}>
+                    <Link href={`/dashboard/tiket/${t.id}`}>
+                      <button className={`${styles.button} ${styles.viewButton}`}>Edit</button>
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(t.id)}
+                      className={`${styles.button} ${styles.deleteButton}`}
+                    >
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

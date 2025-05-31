@@ -1,27 +1,27 @@
 import { supabase } from '../supabaseClient';
 
-export const editFilm = async (id, film, file) => {
-  let posterUrl = film.poster;
+export const editBioskop = async (id, tb_bioskop, file) => {
+  let posterUrl = tb_bioskop.poster;
 
   if (file) {
     const fileExt = file.name.split('.').pop();
     const fileName = `${Date.now()}.${fileExt}`;
     const { data: uploadData, error: uploadError } = await supabase
       .storage
-      .from('tb_film-poster')
+      .from('tb_bioskop-poster')
       .upload(fileName, file);
 
     if (uploadError) throw uploadError;
 
-    const { data: urlData } = supabase.storage.from('tb_film-poster').getPublicUrl(fileName);
+    const { data: urlData } = supabase.storage.from('tb_bioskop-poster').getPublicUrl(fileName);
     posterUrl = urlData.publicUrl;
   }
 
   const { data, error } = await supabase
-    .from('tb_film')
+    .from('tb_bioskop')
     .update({ ...film, poster: posterUrl })
     .eq('id', id);
 
-  if (error) throw error;
-  return data;
+    if (error) throw error;
+    return data;
 };

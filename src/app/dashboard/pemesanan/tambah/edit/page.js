@@ -1,20 +1,46 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '@/app/ui/dashboard/film/tambahfilm.module.css';
 
-const TambahFilm = () => {
+const EditFilm = ({ filmId }) => {
   const [form, setForm] = useState({
     nama: '',
     deskripsi: '',
     genre: '',
     rating: '',
     durasi: '',
-    poster: null, // file
+    poster: null,
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [previewUrl, setPreviewUrl] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    // Fetch data film berdasarkan id
+    const fetchFilm = async () => {
+      try {
+        const res = await fetch(`/api/film/${filmId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setForm({
+            nama: data.nama || '',
+            deskripsi: data.deskripsi || '',
+            genre: data.genre || '',
+            rating: data.rating?.toString() || '',
+            durasi: data.durasi?.toString() || '',
+            poster: null,
+          });
+          setPreviewUrl(data.poster || null);
+        }
+      } catch (error) {
+        alert('Gagal mengambil data film');
+      }
+    };
+    fetchFilm();
+  }, [filmId]);
+
+  // validateForm, handleChange, handleFileChange sama seperti TambahFilm
 
   const validateForm = () => {
     const newErrors = {};
@@ -42,7 +68,6 @@ const TambahFilm = () => {
   const handleChange = (e) => {
     const { id, value } = e.target;
     setForm(prev => ({ ...prev, [id]: value }));
-    
     if (errors[id]) {
       setErrors(prev => {
         const newErrors = {...prev};
@@ -56,7 +81,6 @@ const TambahFilm = () => {
     const file = e.target.files[0];
     if (file) {
       setForm(prev => ({ ...prev, poster: file }));
-      
       const fileReader = new FileReader();
       fileReader.onload = () => {
         setPreviewUrl(fileReader.result);
@@ -70,11 +94,9 @@ const TambahFilm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) return;
-    
     setLoading(true);
-    
+
     try {
       const body = new FormData();
       body.append('nama', form.nama);
@@ -84,23 +106,13 @@ const TambahFilm = () => {
       body.append('durasi', form.durasi);
       if (form.poster) body.append('poster', form.poster);
 
-      const res = await fetch('/api/film', {
-        method: 'POST',
+      const res = await fetch(`/api/film/${filmId}`, {
+        method: 'PATCH',
         body,
       });
 
       if (res.ok) {
-        setSuccessMessage('Film berhasil ditambahkan!');
-        setForm({
-          nama: '',
-          deskripsi: '',
-          genre: '',
-          rating: '',
-          durasi: '',
-          poster: null,
-        });
-        setPreviewUrl(null);
-        
+        setSuccessMessage('Film berhasil diupdate!');
         setTimeout(() => {
           window.location.href = '/dashboard/film';
         }, 2000);
@@ -128,6 +140,7 @@ const TambahFilm = () => {
       )}
       
       <form onSubmit={handleSubmit} className={styles.form}>
+        <h2>Edit Film</h2>
 
         <div className={styles.formGroup}>
           <label htmlFor="nama">Nama Film</label>
@@ -202,7 +215,6 @@ const TambahFilm = () => {
             onChange={handleFileChange}
             className={styles.fileInput}
           />
-          
           {previewUrl && (
             <div className={styles.previewContainer}>
               <p className={styles.previewLabel}>Preview:</p>
@@ -223,7 +235,7 @@ const TambahFilm = () => {
             disabled={loading}
             className={styles.submitButton}
           >
-            {loading ? 'Saving...' : 'Save'}
+            {loading ? 'Saving...' : 'Update'}
           </button>
           
           <button
@@ -239,4 +251,4 @@ const TambahFilm = () => {
   );
 };
 
-export default TambahFilm;
+export default EditFilm;

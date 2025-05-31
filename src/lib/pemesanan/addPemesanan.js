@@ -8,16 +8,16 @@ export const addFilm = async (film, file) => {
     const fileName = `${Date.now()}.${fileExt}`;
     const { data: uploadData, error: uploadError } = await supabase
         .storage
-        .from('tb_film-poster')
+        .from('film-poster')
         .upload(fileName, file);
 
     if (uploadError) throw uploadError;
 
-    const { data: urlData } = supabase.storage.from('tb_film-poster').getPublicUrl(fileName);
+    const { data: urlData } = supabase.storage.from('film-poster').getPublicUrl(fileName);
     posterUrl = urlData.publicUrl;
     }
 
-    const { data, error } = await supabase.from('tb_film').insert([{ ...film, poster: posterUrl }]);
+    const { data, error } = await supabase.from('tbbioskop').insert([{ ...film, poster: posterUrl }]);
     if (error) throw error;
     return data;
 };

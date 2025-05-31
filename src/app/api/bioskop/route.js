@@ -6,27 +6,29 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+
+
 export async function POST(req) {
   try {
     const formData = await req.formData();
 
     const nama = formData.get('nama');
-    const deskripsi = formData.get('deskripsi');
-    const id_genre = parseInt(formData.get('genre')); 
-    const rating = parseFloat(formData.get('rating'));
-    const durasi = parseInt(formData.get('durasi'));
+    const alamat = formData.get('alamat');
+    const tlp = formData.get('tlp');
     const poster = formData.get('poster');
+
+    console.log('Fields:', { nama, alamat, tlp, poster });
 
     let posterUrl = '';
 
     if (poster && typeof poster.name === 'string') {
       const ext = poster.name.split('.').pop();
       const fileName = `${Date.now()}.${ext}`;
-      const filePath = `tb_film/${fileName}`;
+      const filePath = `tb_bioskop/${fileName}`;
 
       const { data, error: uploadError } = await supabase
         .storage
-        .from('poster')
+        .from('poster') 
         .upload(filePath, poster, {
           contentType: poster.type,
         });
@@ -45,13 +47,11 @@ export async function POST(req) {
     }
 
     const { error: insertError } = await supabase
-      .from('tb_film')
+      .from('tb_bioskop')
       .insert({
         nama,
-        deskripsi,
-        id_genre,
-        rating,
-        durasi,
+        alamat,
+        tlp,
         poster: posterUrl,
       });
 
@@ -62,8 +62,8 @@ export async function POST(req) {
 
     return NextResponse.json({ message: 'Film berhasil ditambahkan!' });
 
-  } catch (error) {
+    } catch (error) {
     console.error('Server error:', error);
     return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
-  }
+    }
 }

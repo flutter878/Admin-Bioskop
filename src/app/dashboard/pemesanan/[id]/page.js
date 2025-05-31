@@ -24,7 +24,7 @@ export default function EditFilm() {
         genre: data.genre || '',
         rating: data.rating || '',
         durasi: data.durasi || '',
-        poster: null 
+        poster: null // kita tidak tampilkan URL poster sebagai file
       });
     }
     if (id) fetchData();
@@ -57,7 +57,7 @@ export default function EditFilm() {
     const data = await res.json();
     if (res.ok) {
       alert(data.message);
-      router.push('/dashboard/film');
+      router.push('/dasboard/film');
     } else {
       alert(data.error || 'Gagal update');
     }

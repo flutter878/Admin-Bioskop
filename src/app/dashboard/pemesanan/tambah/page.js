@@ -43,6 +43,7 @@ const TambahFilm = () => {
     const { id, value } = e.target;
     setForm(prev => ({ ...prev, [id]: value }));
     
+    // Clear error when field is edited
     if (errors[id]) {
       setErrors(prev => {
         const newErrors = {...prev};
@@ -57,6 +58,7 @@ const TambahFilm = () => {
     if (file) {
       setForm(prev => ({ ...prev, poster: file }));
       
+      // Create preview URL
       const fileReader = new FileReader();
       fileReader.onload = () => {
         setPreviewUrl(fileReader.result);
@@ -91,6 +93,7 @@ const TambahFilm = () => {
 
       if (res.ok) {
         setSuccessMessage('Film berhasil ditambahkan!');
+        // Reset form after successful submission
         setForm({
           nama: '',
           deskripsi: '',
@@ -101,6 +104,7 @@ const TambahFilm = () => {
         });
         setPreviewUrl(null);
         
+        // Redirect to film page after 2 seconds
         setTimeout(() => {
           window.location.href = '/dashboard/film';
         }, 2000);
