@@ -15,11 +15,8 @@ export async function POST(req) {
     const nama = formData.get('nama');
     const alamat = formData.get('alamat');
     const tlp = formData.get('tlp');
-    const poster = formData.get('poster');
-
-    console.log('Fields:', { nama, alamat, tlp, poster });
-
-    let posterUrl = '';
+    const poster = formData.get('poster')
+    '';
 
     if (poster && typeof poster.name === 'string') {
       const ext = poster.name.split('.').pop();

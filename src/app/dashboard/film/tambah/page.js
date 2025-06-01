@@ -9,7 +9,7 @@ const TambahFilm = () => {
     genre: '',
     rating: '',
     durasi: '',
-    poster: null, // file
+    poster: null, 
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});

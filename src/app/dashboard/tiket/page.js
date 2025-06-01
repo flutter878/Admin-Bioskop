@@ -7,11 +7,13 @@ import styles from '@/app/ui/dashboard/film/film.module.css';
 
 const Tiket = () => {
   const [tiket, setTiket] = useState([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       const data = await getTiket();
       setTiket(data);
+      setIsMounted(true); 
     }
     fetchData();
   }, []);
@@ -22,6 +24,8 @@ const Tiket = () => {
     await deleteTiket(id);
     setTiket((prev) => prev.filter((item) => item.id !== id));
   };
+
+  if (!isMounted) return <p>Memuat data tiket...</p>;
 
   return (
     <div className={styles.container}>
@@ -40,7 +44,7 @@ const Tiket = () => {
               <th className={styles.th}>Nama Film</th>
               <th className={styles.th}>Nama Bioskop</th>
               <th className={styles.th}>Harga</th>
-              <th className={styles.th}>jadwal</th>
+              <th className={styles.th}>Jadwal</th>
               <th className={styles.th}>Keterangan</th>
               <th className={styles.th}>Aksi</th>
             </tr>
@@ -48,7 +52,7 @@ const Tiket = () => {
           <tbody>
             {tiket.length === 0 ? (
               <tr>
-                <td colSpan="6" className={styles.noData}>Tidak ada data tiket</td>
+                <td colSpan="7" className={styles.noData}>Tidak ada data tiket</td>
               </tr>
             ) : (
               tiket.map((t, index) => (

@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import styles from '@/app/ui/dashboard/film/tambahfilm.module.css'; // bisa pakai style sama
+import styles from '@/app/ui/dashboard/film/tambahfilm.module.css'; 
 import { getAllFilm } from '@/lib/film/getAllFilm';
 import { getAllBioskop } from '@/lib/bioskop/getAllBioskop';
 
