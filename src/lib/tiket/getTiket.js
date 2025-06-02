@@ -21,6 +21,8 @@ export const getTiket = async () => {
       .order('id', { ascending: true });
 
     if (error) throw error;
+
+    console.log('Data tiket:', data); // debug
     return data;
   } catch (err) {
     console.error('Gagal mengambil data tiket:', err.message);

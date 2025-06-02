@@ -39,6 +39,8 @@ const Pemesanan = () => {
     <th className={styles.th}>Nama Film</th>
     <th className={styles.th}>Nama Pemesan</th>
     <th className={styles.th}>Nama Bioskop</th>
+    <th className={styles.th}>No Kursi</th>
+    <th className={styles.th}>Jadwal</th>
     <th className={styles.th}>Harga</th>
     <th className={styles.th}>Status</th>
     <th className={styles.th}>Aksi</th>

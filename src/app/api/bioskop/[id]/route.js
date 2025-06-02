@@ -6,9 +6,11 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-export async function POST(req) {
+export async function PATCH(req, { params }) {
   try {
+    const id = params.id;
     const formData = await req.formData();
+
     const nama = formData.get('nama');
     const alamat = formData.get('alamat');
     const tlp = formData.get('tlp');
@@ -41,22 +43,27 @@ export async function POST(req) {
       posterUrl = urlData.publicUrl;
     }
 
-    const { error: insertError } = await supabase
-      .from('tb_bioskop')
-      .insert({
-        nama,
-        alamat,
-        tlp,
-        poster: posterUrl,
-      });
+    const updateData = {
+      nama,
+      alamat,
+      tlp,
+    };
 
-    if (insertError) {
-      console.error('Insert error:', insertError);
-      return NextResponse.json({ error: 'Gagal simpan data bioskop' }, { status: 500 });
+    if (posterUrl) {
+      updateData.poster = posterUrl;
     }
 
-    return NextResponse.json({ message: 'Bioskop berhasil ditambahkan!' });
+    const { error: updateError } = await supabase
+      .from('tb_bioskop')
+      .update(updateData)
+      .eq('id', id);
 
+    if (updateError) {
+      console.error('Update error:', updateError);
+      return NextResponse.json({ error: 'Gagal update data bioskop' }, { status: 500 });
+    }
+
+    return NextResponse.json({ message: 'Data bioskop berhasil diperbarui!' });
   } catch (error) {
     console.error('Server error:', error);
     return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });

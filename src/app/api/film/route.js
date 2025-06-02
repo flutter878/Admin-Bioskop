@@ -12,10 +12,20 @@ export async function POST(req) {
 
     const nama = formData.get('nama');
     const deskripsi = formData.get('deskripsi');
-    const id_genre = parseInt(formData.get('genre')); 
+    const genreValue = formData.get('genre');
     const rating = parseFloat(formData.get('rating'));
     const durasi = parseInt(formData.get('durasi'));
     const poster = formData.get('poster');
+
+    // Validasi dasar
+    if (!nama || !deskripsi || !genreValue || !rating || !durasi) {
+      return NextResponse.json({ error: 'Semua field wajib diisi' }, { status: 400 });
+    }
+
+    const id_genre = parseInt(genreValue);
+    if (isNaN(id_genre)) {
+      return NextResponse.json({ error: 'ID Genre tidak valid' }, { status: 400 });
+    }
 
     let posterUrl = '';
 
@@ -32,7 +42,7 @@ export async function POST(req) {
         });
 
       if (uploadError) {
-        console.error('Upload error:', uploadError);
+        console.error('Upload error:', uploadError.message);
         return NextResponse.json({ error: 'Gagal upload poster' }, { status: 500 });
       }
 
@@ -56,14 +66,14 @@ export async function POST(req) {
       });
 
     if (insertError) {
-      console.error('Insert error:', insertError);
+      console.error('Insert error:', insertError.message);
       return NextResponse.json({ error: 'Gagal simpan film' }, { status: 500 });
     }
 
     return NextResponse.json({ message: 'Film berhasil ditambahkan!' });
 
   } catch (error) {
-    console.error('Server error:', error);
-    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    console.error('Server error:', error.message);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

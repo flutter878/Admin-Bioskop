@@ -143,7 +143,24 @@
     font-size: 14px;
   }
   
-  /* Responsiveness */
+  .previewImage {
+  max-width: 200px;
+  max-height: 300px;
+  object-fit: cover; 
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formGroup select {
+  color: rgb(255, 255, 255); 
+  background-color: rgb(36, 36, 36); 
+}
+
+.formGroup option {
+  color: rgb(255, 255, 255); 
+}
+
+
   @media (max-width: 768px) {
     .container {
       padding: 16px;

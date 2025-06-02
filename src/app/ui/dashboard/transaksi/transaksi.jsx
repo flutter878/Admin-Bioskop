@@ -50,7 +50,7 @@ const Transaksi = () => {
             </td>
             <td>
               <span className={`${Styles.status} ${Styles.done}`}>
-                Pending
+                Succes
               </span>
             </td>
             <td>14.02.2025</td>
@@ -71,7 +71,7 @@ const Transaksi = () => {
             </td>
             <td>
               <span className={`${Styles.status} ${Styles.cancel}`}>
-                Pending
+                Cencel
               </span>
             </td>
             <td>14.02.2025</td>
